@@ -16,11 +16,12 @@
             android:id="@+id/tool_bar"
             layout="@layout/tool_bar"
             />
+
         <android.support.v7.widget.RecyclerView
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/invoiceList"
+            android:id="@+id/invoice_list"
             android:transcriptMode="alwaysScroll"
             android:stackFromBottom="true"
             android:divider="@null"

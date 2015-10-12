@@ -3,4 +3,55 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_invoice"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            >
+
+            <TextView
+                android:id="@+id/invoce_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:textSize="20sp"
+                android:layout_marginRight="16dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/customer_name"
+                android:textSize="12sp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/invoce_number"
+                />
+            <TextView
+                android:id="@+id/amount_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/invoce_number"
+
+                />
+            <TextView
+                android:id="@+id/date_invoiced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@id/customer_name"
+
+                />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>

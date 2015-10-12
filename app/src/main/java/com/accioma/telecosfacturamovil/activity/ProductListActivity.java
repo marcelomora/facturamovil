@@ -2,28 +2,23 @@ package com.accioma.telecosfacturamovil.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.accioma.telecosfacturamovil.R;
 
-public class InvoiceActivity extends AppCompatActivity {
+public class ProductListActivity extends ActionBarActivity {
 
-    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_invoice);
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_product_list);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_invoice, menu);
+        getMenuInflater().inflate(R.menu.menu_product_list, menu);
         return true;
     }
 
