@@ -1,5 +1,6 @@
 package com.accioma.telecosfacturamovil.activity;
 
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,10 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.ImageButton;
 import com.accioma.telecosfacturamovil.adapter.InvoiceListAdapter;
 import com.accioma.telecosfacturamovil.adapter.MyAdapter;
-
 import com.accioma.telecosfacturamovil.R;
 
 public class InvoiceListActivity extends AppCompatActivity {
@@ -25,8 +25,8 @@ public class InvoiceListActivity extends AppCompatActivity {
     //Similarly we Create a String Resource for the name and email in the header view
     //And we also create a int resource for profile picture in the header view
 
-    String NAME = "Akash Bangad";
-    String EMAIL = "akash.bangad@android4devs.com";
+    String NAME = "Marcelo Mora";
+    String EMAIL = "marcelo.mora@accioma.com";
     int PROFILE = R.drawable.mm;
 
     RecyclerView mRecyclerView;                           // Declaring RecyclerView
@@ -39,6 +39,8 @@ public class InvoiceListActivity extends AppCompatActivity {
     RecyclerView mInvoiceList;
     RecyclerView.Adapter mInvoiceAdapter;
     RecyclerView.LayoutManager mInvoiceLlm;
+
+    ImageButton mFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,15 @@ public class InvoiceListActivity extends AppCompatActivity {
         mInvoiceList.setLayoutManager(mInvoiceLlm);
         mInvoiceAdapter = new InvoiceListAdapter();
         mInvoiceList.setAdapter(mInvoiceAdapter);
+
+        mFab = (ImageButton) findViewById(R.id.add_invoice_button);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( InvoiceListActivity.this, InvoiceFormActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

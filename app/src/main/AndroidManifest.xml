@@ -24,6 +24,8 @@
             android:name=".activity.CustomerListActivity"
             android:label="@string/title_activity_customer_list" >
         </activity>
+        <activity android:name=".activity.InvoiceFormActivity" >
+        </activity>
     </application>
 
 </manifest>

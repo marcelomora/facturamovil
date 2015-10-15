@@ -1,9 +1,12 @@
 package com.accioma.telecosfacturamovil.model;
 
+import java.io.Serializable;
+
 /**
  * Created by marcelomora on 9/23/15.
  */
-public class Customer {
+public class Customer implements Serializable {
+    private long id;
     private String firstname;
     private String lastname;
     private String fiscalId;
@@ -13,10 +16,19 @@ public class Customer {
     private String phone1;
     private String phone2;
 
-    public Customer(String fiscalId, String lastname, String firstname){
+    public Customer(long id, String fiscalId, String lastname, String firstname){
+        this.id = id;
         this.fiscalId = fiscalId;
         this.lastname = lastname;
         this.firstname = firstname;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getAddress1() {

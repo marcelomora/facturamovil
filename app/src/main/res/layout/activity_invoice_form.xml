@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar"
+
+        ></include>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:background="@color/FormBackground">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FAC 001-001-000000023"
+                android:id="@+id/invoice_number"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/ColorPrimaryDark" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:background="@color/FormBackground"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A "
+                android:id="@+id/customer_label"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/customer"
+                android:id="@+id/customer_name"
+
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+
