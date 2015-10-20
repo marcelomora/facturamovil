@@ -36,12 +36,12 @@
                 android:background="@null" />
 
             <ImageButton
-                android:id="@+id/add_invoice_button"
+                android:id="@+id/add_customer_button"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_margin="15dp"
                 android:background="@drawable/circle"
-                android:src="@drawable/ic_note_add"
+                android:src="@drawable/ic_plus"
                 android:layout_gravity="right|bottom"
                 />
         </FrameLayout>

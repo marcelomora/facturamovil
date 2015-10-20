@@ -3,6 +3,8 @@ package com.accioma.telecosfacturamovil.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accioma.telecosfacturamovil.R;
+import com.accioma.telecosfacturamovil.adapter.InvoiceLineListAdapter;
 import com.accioma.telecosfacturamovil.model.Customer;
 import com.accioma.telecosfacturamovil.model.CustomerDAO;
 
@@ -25,6 +28,7 @@ public class InvoiceFormActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView customerText;
     private int customerId;
+    private RecyclerView invoiceLines;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +44,27 @@ public class InvoiceFormActivity extends AppCompatActivity {
                 Intent intent = new Intent(InvoiceFormActivity.this, CustomerListActivity.class );
                 startActivityForResult(intent, REQUEST_CUSTOMER);
                 //startActivity(intent);
-
             }
         });
+
+        invoiceLines = (RecyclerView)findViewById(R.id.invoice_line);
+
+        invoiceLines.setHasFixedSize(true);
+        invoiceLines.setLayoutManager(new LinearLayoutManager(this));
+        invoiceLines.setAdapter(new InvoiceLineListAdapter());
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
         if(requestCode == REQUEST_CUSTOMER){
-            customer = (Customer) data.getSerializableExtra("CUSTOMER");
-            customerText.setText(customer.getFirstname() + " " + customer.getLastname());
+            try{
+                customer = (Customer) data.getSerializableExtra("CUSTOMER");
+                customerText.setText(customer.getFirstname() + " " + customer.getLastname());
+
+            }catch (NullPointerException npe){
+
+            }
         }
 
     }

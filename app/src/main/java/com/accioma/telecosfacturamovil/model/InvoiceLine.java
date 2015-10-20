@@ -1,6 +1,7 @@
 package com.accioma.telecosfacturamovil.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,6 +9,7 @@ import java.util.List;
  */
 public class InvoiceLine implements Serializable {
     private long id;
+    private long invoiceId;
     private Product product;
     private float unitPrice;
     private float qtty;
@@ -16,15 +18,27 @@ public class InvoiceLine implements Serializable {
     private float discountPercent;
     private List<TaxLine> taxes;
 
-    public InvoiceLine(float discount, float discountPercent, long id, Product product, float qtty, float subtotalPrice, List<TaxLine> taxes, float unitPrice) {
-        this.discount = discount;
-        this.discountPercent = discountPercent;
+    public InvoiceLine(long invoiceId, long id, float qtty, Product product,
+                       float subtotalPrice,long taxIds[], float unitPrice) {
+        this.invoiceId = invoiceId;
         this.id = id;
         this.product = product;
         this.qtty = qtty;
         this.subtotalPrice = subtotalPrice;
-        this.taxes = taxes;
         this.unitPrice = unitPrice;
+
+        List<TaxLine> taxLines = new ArrayList<TaxLine>();
+        for(long taxId : taxIds){
+            taxLines.add(new TaxLine(1L, id, subtotalPrice, TaxDAO.readAll().get((int)taxId)));
+        }
+    }
+
+    public long getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(long invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
     public float getDiscount() {

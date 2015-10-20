@@ -9,14 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.accioma.telecosfacturamovil.R;
 import com.accioma.telecosfacturamovil.activity.InvoiceFormActivity;
 import com.accioma.telecosfacturamovil.model.Customer;
 import com.accioma.telecosfacturamovil.model.CustomerDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,14 +23,19 @@ import java.util.List;
 public class CustomerListAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public final static String TAG = CustomerListAdapter.class.getSimpleName();
     private List<Customer> customers;
-    private Context mContext;
+    //private Context mContext;
     private Activity mActivity;
 
     public CustomerListAdapter(Context context, Activity activity){
-        mContext = context;
+        //mContext = context;
         mActivity = activity;
         prepareCustomers();
-        Log.e(TAG, "customers " + customers.size());
+    }
+
+    public CustomerListAdapter(Activity activity){
+        //mContext = context;
+        mActivity = activity;
+        prepareCustomers();
     }
 
     @Override
@@ -46,7 +49,6 @@ public class CustomerListAdapter  extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.e(TAG, "Bind " + customers.size());
         CustomerViewHolder cvh = (CustomerViewHolder)holder;
         cvh.fin.setText(customers.get(position).getFiscalId());
         cvh.name.setText(customers.get(position).getLastname() + " " +
@@ -94,8 +96,6 @@ public class CustomerListAdapter  extends RecyclerView.Adapter<RecyclerView.View
 
         @Override
         public void onClick(View view) {
-            Log.i(TAG, String.valueOf(getAdapterPosition()));
-            //Toast.makeText(view.getContext(), "The item clicked is " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
             itemClickListener.onClick(view, getAdapterPosition(), false);
         }
 

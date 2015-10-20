@@ -8,19 +8,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.accioma.telecosfacturamovil.adapter.DrawerAdapter;
 import com.accioma.telecosfacturamovil.adapter.InvoiceListAdapter;
-import com.accioma.telecosfacturamovil.adapter.MyAdapter;
 import com.accioma.telecosfacturamovil.R;
 
 public class InvoiceListActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    String TITLES[] = {"Home","Events","Mail","Shop","Travel"};
-    int ICONS[] = {R.drawable.ic_home,R.drawable.ic_event,R.drawable.ic_mail, R.drawable.ic_shop, R.drawable.ic_flight_takeoff};
+    String TITLES[] = {"Facturas","Clientes"};
+    int ICONS[] = {R.drawable.ic_coin,R.drawable.ic_account};
 
     //Similarly we Create a String Resource for the name and email in the header view
     //And we also create a int resource for profile picture in the header view
@@ -30,11 +34,14 @@ public class InvoiceListActivity extends AppCompatActivity {
     int PROFILE = R.drawable.mm;
 
     RecyclerView mRecyclerView;                           // Declaring RecyclerView
-    RecyclerView.Adapter mAdapter;                        // Declaring Adapter For Recycler View
+    RecyclerView.Adapter mAdapter = new DrawerAdapter(TITLES,ICONS,NAME,EMAIL,PROFILE, this );                        // Declaring Adapter For Recycler View
     RecyclerView.LayoutManager mLayoutManager;            // Declaring Layout Manager as a linear layout manager
     DrawerLayout Drawer;                                  // Declaring DrawerLayout
 
     ActionBarDrawerToggle mDrawerToggle;                  // Declaring Action Bar Drawer Toggle
+
+
+
 
     RecyclerView mInvoiceList;
     RecyclerView.Adapter mInvoiceAdapter;
@@ -50,10 +57,48 @@ public class InvoiceListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
-        mAdapter = new MyAdapter(TITLES,ICONS,NAME,EMAIL,PROFILE);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
         mRecyclerView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
         mLayoutManager = new LinearLayoutManager(this);                 // Creating a layout Manager
         mRecyclerView.setLayoutManager(mLayoutManager);                 // Setting the layout Manager
+
+        final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener(){
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+        });
+
+        mRecyclerView.addOnItemTouchListener( new RecyclerView.OnItemTouchListener() {
+
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                View child = rv.findChildViewUnder(e.getX(), e.getY());
+                if(child != null && gestureDetector.onTouchEvent(e)){
+                    Drawer.closeDrawers();
+                    int selection =  rv.getChildAdapterPosition(child);
+                    Intent intent = null;
+                    switch (selection){
+                        case 2:
+                            intent = new Intent(InvoiceListActivity.this, CustomerListActivity.class);
+                            break;
+                    }
+                    if(intent != null){
+                        startActivity(intent);
+                    }
+
+
+                    Toast.makeText(InvoiceListActivity.this, "The Item clicked is: " +
+                    rv.getChildAdapterPosition(child), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+        });
 
         Drawer = (DrawerLayout) findViewById(R.id.DrawerLayout);        // Drawer object Assigned to the view
         mDrawerToggle = new ActionBarDrawerToggle(this,Drawer,toolbar,R.string.openDrawer,R.string.closeDrawer){

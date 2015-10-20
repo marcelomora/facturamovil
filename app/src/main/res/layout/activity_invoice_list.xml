@@ -41,7 +41,7 @@
                 android:layout_height="70dp"
                 android:layout_margin="15dp"
                 android:background="@drawable/circle"
-                android:src="@drawable/ic_note_add"
+                android:src="@drawable/ic_plus"
                 android:layout_gravity="right|bottom"
                 />
         </FrameLayout>
