@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.accioma.telecosfacturamovil.R;
+import com.accioma.telecosfacturamovil.activity.CustomerFormActivity;
 import com.accioma.telecosfacturamovil.activity.InvoiceFormActivity;
+import com.accioma.telecosfacturamovil.model.Consts;
 import com.accioma.telecosfacturamovil.model.Customer;
 import com.accioma.telecosfacturamovil.model.CustomerDAO;
 
@@ -22,18 +24,20 @@ import java.util.List;
  */
 public class CustomerListAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public final static String TAG = CustomerListAdapter.class.getSimpleName();
+    public final static int SELECT_INVOICE = 1;
+    public final static int EDIT_CUSTOMER = 2;
+
     private List<Customer> customers;
-    //private Context mContext;
+    private Context mContext;
     private Activity mActivity;
 
     public CustomerListAdapter(Context context, Activity activity){
-        //mContext = context;
+        mContext = context;
         mActivity = activity;
         prepareCustomers();
     }
 
     public CustomerListAdapter(Activity activity){
-        //mContext = context;
         mActivity = activity;
         prepareCustomers();
     }
@@ -60,11 +64,23 @@ public class CustomerListAdapter  extends RecyclerView.Adapter<RecyclerView.View
                 //Toast.makeText(mContext, "#" + position + "-"
                 //        + customers.get(position).getFirstname() + " "
                 //        + customers.get(position).getLastname(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
                 //intent.putExtra("CUSTOMER", customers.get(position).getFiscalId());
-                intent.putExtra("CUSTOMER", customers.get(position));
-                CustomerListAdapter.this.mActivity.setResult(InvoiceFormActivity.REQUEST_CUSTOMER,
-                        intent);
+                int mode = mActivity.getIntent().getIntExtra(Consts.PARENT_ACTIVITY_MODE, -1);
+                switch (mode) {
+                    case SELECT_INVOICE:
+                        Intent intent = new Intent();
+                        intent.putExtra("CUSTOMER", customers.get(position));
+                        CustomerListAdapter.this.mActivity.setResult(InvoiceFormActivity.REQUEST_CUSTOMER,
+                                intent);
+                        break;
+                    case EDIT_CUSTOMER:
+                        Intent intent1 = new Intent(CustomerListAdapter.this.mActivity,
+                                CustomerFormActivity.class);
+                        Log.e(TAG, "Edit customer");
+                        CustomerListAdapter.this.mActivity.startActivity(intent1);
+                        break;
+                }
+
                 CustomerListAdapter.this.mActivity.finish();
             }
         });

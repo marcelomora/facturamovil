@@ -5,3 +5,10 @@
 .DS_Store
 /build
 /captures
+.idea
+*.iml
+**.iml
+.idea/runConfigurations.xml
+
+facturamovil.iml
+

@@ -13,7 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accioma.telecosfacturamovil.R;
+import com.accioma.telecosfacturamovil.adapter.CustomerListAdapter;
 import com.accioma.telecosfacturamovil.adapter.InvoiceLineListAdapter;
+import com.accioma.telecosfacturamovil.adapter.InvoiceListAdapter;
+import com.accioma.telecosfacturamovil.model.Consts;
 import com.accioma.telecosfacturamovil.model.Customer;
 import com.accioma.telecosfacturamovil.model.CustomerDAO;
 
@@ -42,6 +45,7 @@ public class InvoiceFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(InvoiceFormActivity.this, CustomerListActivity.class );
+                intent.putExtra(Consts.PARENT_ACTIVITY_MODE, CustomerListAdapter.SELECT_INVOICE);
                 startActivityForResult(intent, REQUEST_CUSTOMER);
                 //startActivity(intent);
             }

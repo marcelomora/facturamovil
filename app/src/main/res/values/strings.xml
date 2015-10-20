@@ -12,4 +12,5 @@
     <string name="title_activity_customer_list">Clientes</string>
     <string name="title_activity_invoice_form">Factura</string>
     <string name="customer">Cliente</string>
+    <string name="address">Dirección</string>
 </resources>
