@@ -15,7 +15,7 @@ import com.accioma.telecosfacturamovil.activity.CustomerFormActivity;
 import com.accioma.telecosfacturamovil.activity.InvoiceFormActivity;
 import com.accioma.telecosfacturamovil.model.Consts;
 import com.accioma.telecosfacturamovil.model.Customer;
-import com.accioma.telecosfacturamovil.model.CustomerDAO;
+import com.accioma.telecosfacturamovil.db.CustomerDAO;
 
 import java.util.List;
 

@@ -1,4 +1,7 @@
-package com.accioma.telecosfacturamovil.model;
+package com.accioma.telecosfacturamovil.db;
+
+import com.accioma.telecosfacturamovil.model.InvoiceLine;
+import com.accioma.telecosfacturamovil.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;

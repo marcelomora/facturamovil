@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.accioma.telecosfacturamovil.R;
 import com.accioma.telecosfacturamovil.model.Customer;
-import com.accioma.telecosfacturamovil.model.CustomerDAO;
+import com.accioma.telecosfacturamovil.db.CustomerDAO;
 import com.accioma.telecosfacturamovil.model.Invoice;
 
 import java.util.ArrayList;
