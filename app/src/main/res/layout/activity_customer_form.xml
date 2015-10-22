@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Nombre"
+                android:hint="Nombre"
                 android:ems="10"
                 android:id="@+id/editTextFirstName"
                 android:layout_gravity="center_horizontal" />
@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Apellido"
+                android:hint="Apellido"
                 android:ems="10"
                 android:id="@+id/editTextLastName"
                 android:layout_gravity="center_horizontal" />
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextFIN"
-                android:text="CI/RUC/Pasaporte"
+                android:hint="CI/RUC/Pasaporte"
                 android:digits="1234567890"
                 android:layout_gravity="center_horizontal" />
 
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:text="Correo Electrónico"
+                android:hint="Correo Electrónico"
                 android:ems="10"
                 android:id="@+id/editTextEmail"
                 android:layout_gravity="center_horizontal" />
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Contacto"
+                android:hint="Contacto"
                 android:id="@+id/editTextContactName"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
@@ -74,7 +74,7 @@
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Móvil"
+                    android:hint="Móvil"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/textViewMobile" />
                 <EditText
@@ -94,7 +94,7 @@
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Teléfono"
+                    android:hint="Teléfono"
                     android:ems="10"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/textViewLandline" />
@@ -115,7 +115,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/address"
+                android:hint="@string/address"
                 android:padding="5dp"
                 android:textColor="#FFF"/>
 
@@ -128,21 +128,21 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Línea 2"
+                android:hint="Línea 2"
                 android:ems="10"
                 android:id="@+id/editTextAddress2"
                 android:layout_gravity="center_horizontal" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Línea 3"
+                android:hint="Línea 3"
                 android:ems="10"
                 android:id="@+id/editTextAddress3"
                 android:layout_gravity="center_horizontal" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Línea 1"
+                android:hint="Línea 1"
                 android:ems="10"
                 android:id="@+id/editTextAddress1"
                 android:layout_gravity="center_horizontal" />
