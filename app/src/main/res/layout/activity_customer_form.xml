@@ -147,7 +147,26 @@
                 android:id="@+id/editTextAddress1"
                 android:layout_gravity="center_horizontal" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:ems="10"
+                android:textSize="16dp"
+                android:padding="5dp"
+                android:id="@+id/tvLocation"
+                android:layout_gravity="center_horizontal" />
+
         </LinearLayout>
-    </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show Location"
+                android:layout_margin="10dp"
+                android:id="@+id/btnShowLocation"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
