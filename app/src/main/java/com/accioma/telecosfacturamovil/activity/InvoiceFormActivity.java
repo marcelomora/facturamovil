@@ -34,6 +34,9 @@ public class InvoiceFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_invoice_form);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         customerText = (TextView) findViewById(R.id.customer_name);
         customerText.setOnClickListener(new View.OnClickListener() {
@@ -82,9 +85,13 @@ public class InvoiceFormActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            case R.id.action_settings:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

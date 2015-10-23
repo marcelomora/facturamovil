@@ -13,4 +13,5 @@
     <string name="title_activity_invoice_form">Factura</string>
     <string name="customer">Cliente</string>
     <string name="address">Dirección</string>
+    <string name="save">Guardar</string>
 </resources>

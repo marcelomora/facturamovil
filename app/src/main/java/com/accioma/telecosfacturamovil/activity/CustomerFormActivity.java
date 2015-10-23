@@ -4,10 +4,13 @@ import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.accioma.telecosfacturamovil.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -41,11 +44,20 @@ public class CustomerFormActivity extends AppCompatActivity
     // UI elements
     private TextView mTvLocation;
     private Button btnShowLocation, btnStartLocationUpdates;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_form);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
 
         mTvLocation = (TextView) findViewById(R.id.tvLocation);
         btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
@@ -144,9 +156,31 @@ public class CustomerFormActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_customer_form, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            case R.id.action_save_customer:
+                Toast.makeText(this, "Customer saved", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-
         checkPlayServices();
     }
 }
