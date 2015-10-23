@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.accioma.telecosfacturamovil.R;
-import com.accioma.telecosfacturamovil.model.Invoice;
 import com.accioma.telecosfacturamovil.model.InvoiceLine;
-import com.accioma.telecosfacturamovil.model.InvoiceLineDAO;
+import com.accioma.telecosfacturamovil.db.InvoiceLineDAO;
 
 import java.util.List;
 

@@ -1,4 +1,6 @@
-package com.accioma.telecosfacturamovil.model;
+package com.accioma.telecosfacturamovil.db;
+
+import com.accioma.telecosfacturamovil.model.Tax;
 
 import java.io.Serializable;
 import java.util.ArrayList;

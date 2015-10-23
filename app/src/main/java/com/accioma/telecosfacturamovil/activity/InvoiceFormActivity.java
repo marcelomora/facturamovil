@@ -10,17 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.accioma.telecosfacturamovil.R;
 import com.accioma.telecosfacturamovil.adapter.CustomerListAdapter;
 import com.accioma.telecosfacturamovil.adapter.InvoiceLineListAdapter;
-import com.accioma.telecosfacturamovil.adapter.InvoiceListAdapter;
 import com.accioma.telecosfacturamovil.model.Consts;
 import com.accioma.telecosfacturamovil.model.Customer;
-import com.accioma.telecosfacturamovil.model.CustomerDAO;
-
-import java.util.List;
 
 public class InvoiceFormActivity extends AppCompatActivity {
 
