@@ -25,7 +25,6 @@ public class InvoiceFormActivity extends AppCompatActivity {
     public static final int REQUEST_CUSTOMER = 1;
     private Toolbar toolbar;
     private TextView customerText;
-    private int customerId;
     private RecyclerView invoiceLines;
 
     @Override
@@ -68,7 +67,6 @@ public class InvoiceFormActivity extends AppCompatActivity {
 
             }
         }
-
     }
 
     @Override

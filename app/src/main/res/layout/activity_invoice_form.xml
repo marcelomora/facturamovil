@@ -36,6 +36,15 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/ColorPrimaryDark" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016/06/12"
+                android:id="@+id/invoice_issue_date"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 
@@ -44,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:id="@+id/ll_customer_header"
             android:padding="5dp"
             android:layout_margin="5dp"
             android:background="@color/FormBackground"
@@ -64,16 +74,124 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
-        <android.support.v7.widget.RecyclerView
-            android:scrollbars="vertical"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/invoice_line"
-            android:transcriptMode="alwaysScroll"
-            android:stackFromBottom="true"
-            android:divider="@null"
-            android:background="@null"
-            />
+            android:layout_above="@+id/ll_totals"
+            android:layout_below="@+id/ll_customer_header"
+            android:padding="5pt"
+            android:background="@null">
+
+            <android.support.v7.widget.RecyclerView
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/invoice_line"
+                android:transcriptMode="alwaysScroll"
+                android:stackFromBottom="true"
+                android:divider="@null"
+                android:background="@null"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="5pt"
+        android:id="@+id/ll_totals"
+        android:background="#ffffff"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:elevation="5dp"
+        android:layout_margin="0pt">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="1pt"
+            android:id="@+id/llSubtotal"
+            android:background="#ffffff"
+            android:layout_alignParentRight="true"
+            android:layout_margin="0pt"
+            android:gravity="right"
+            android:weightSum="1">
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subtotal"
+                android:id="@+id/subtotalLabelTextView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zeroFloat"
+                android:id="@+id/subtotalAmountLabelTextView"
+                android:gravity="right"
+                android:textStyle="bold"
+                android:layout_weight="0.09" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="1pt"
+            android:id="@+id/llTotal"
+            android:background="#ffffff"
+            android:layout_alignParentRight="true"
+            android:layout_margin="0pt"
+            android:gravity="right"
+            android:weightSum="1">
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vat"
+                android:id="@+id/vatLabelTextView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zeroFloat"
+                android:id="@+id/vatAmountTextView"
+                android:gravity="right"
+                android:textStyle="bold"
+                android:layout_weight="0.09" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="1pt"
+            android:id="@+id/llAmount"
+            android:background="#ffffff"
+            android:layout_alignParentRight="true"
+            android:layout_margin="0pt"
+            android:gravity="right"
+            android:weightSum="1">
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total"
+                android:id="@+id/amountLabelTextView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zeroFloat"
+                android:id="@+id/amountTotalTextView"
+                android:gravity="right"
+                android:textStyle="bold"
+                android:layout_weight="0.09" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </RelativeLayout>
