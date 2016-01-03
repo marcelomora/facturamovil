@@ -7,12 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.accioma.telecosfacturamovil.R;
-import com.accioma.telecosfacturamovil.model.Customer;
-import com.accioma.telecosfacturamovil.db.CustomerDAO;
 import com.accioma.telecosfacturamovil.model.Invoice;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,7 +36,7 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ivh.customerName.setText(invoices.get(position).getCustomer().getLastname() + " "
             + invoices.get(position).getCustomer().getFirstname());
         ivh.amountTotal.setText("$ " + invoices.get(position).getAmountTotal().toString());
-        ivh.invoiceNumber.setText(invoices.get(position).getInvoiceNumber());
+        ivh.invoiceNumber.setText(invoices.get(position).getName());
     }
 
     @Override
@@ -65,6 +62,7 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void prepareInvoices(){
         invoices = new ArrayList<Invoice>();
+        /*
         List customers = CustomerDAO.readAll();
 
         invoices.add(new Invoice(new Float(23.45), (Customer)customers.get(2), new Date(),
@@ -85,6 +83,6 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 "001", "001", "000000041"));
         invoices.add(new Invoice(new Float(9.16), (Customer)customers.get(2), new Date(),
                 "001", "001", "000000042"));
-
+        */
     }
 }

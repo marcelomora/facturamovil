@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.accioma.telecosfacturamovil.R;
-import com.accioma.telecosfacturamovil.model.InvoiceLine;
 import com.accioma.telecosfacturamovil.db.InvoiceLineDAO;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class InvoiceLineListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public static final String TAG = InvoiceLineListAdapter.class.getSimpleName();
 
-    List<InvoiceLine> invoiceLines;
+    List invoiceLines;
 
     public InvoiceLineListAdapter() {
         this.invoiceLines = InvoiceLineDAO.readInvoiceLines(1L);
@@ -54,16 +53,20 @@ public class InvoiceLineListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         InvoiceLineViewHolder ivh = (InvoiceLineViewHolder) holder;
+        /*
         ivh.productName.setText(invoiceLines.get(position).getProduct().getName());
         ivh.amountTotal.setText(String.format("%.2f", invoiceLines.get(position).getSubtotalPrice()));
         ivh.description.setText(invoiceLines.get(position).getProduct().getDescription());
+        */
         /*
         ivh.priceUnit.setText(
                 String.format("%f", invoiceLines.get(position).getQtty() + " X $") +
                 String.format("%.2f", invoiceLines.get(position).getUnitPrice()));
         */
+        /*
         ivh.priceUnit.setText(
                 String.format("%.2f", invoiceLines.get(position).getUnitPrice()));
+                */
 
     }
 

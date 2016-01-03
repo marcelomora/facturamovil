@@ -1,6 +1,7 @@
 package com.accioma.telecosfacturamovil.activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,7 +19,12 @@ import android.widget.ImageButton;
 import com.accioma.telecosfacturamovil.R;
 import com.accioma.telecosfacturamovil.adapter.CustomerListAdapter;
 import com.accioma.telecosfacturamovil.adapter.DrawerAdapter;
-import com.accioma.telecosfacturamovil.model.Customer;
+import com.accioma.telecosfacturamovil.db.CustomerDAO;
+import com.accioma.telecosfacturamovil.model.CustomerDao;
+import com.accioma.telecosfacturamovil.model.DaoMaster;
+import com.accioma.telecosfacturamovil.model.DaoSession;
+
+import de.greenrobot.dao.query.QueryBuilder;
 
 public class CustomerListActivity extends AppCompatActivity {
 
@@ -53,6 +59,13 @@ public class CustomerListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "tfm-db", null);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        DaoSession daoSession = daoMaster.newSession();
+
+        CustomerDao customerDao = daoSession.getCustomerDao();
+
         setContentView(R.layout.activity_customer_list);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -121,7 +134,9 @@ public class CustomerListActivity extends AppCompatActivity {
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
-        mCustomerListAdapter = new CustomerListAdapter(this);
+        QueryBuilder qbCustomer = customerDao.queryBuilder();
+
+        mCustomerListAdapter = new CustomerListAdapter(this, qbCustomer.list());
         mCustomerList = (RecyclerView) findViewById(R.id.customer_list);
         mCustomerList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);

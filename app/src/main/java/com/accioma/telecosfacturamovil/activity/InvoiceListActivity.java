@@ -16,11 +16,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.accioma.telecosfacturamovil.Consts;
 import com.accioma.telecosfacturamovil.adapter.CustomerListAdapter;
 import com.accioma.telecosfacturamovil.adapter.DrawerAdapter;
 import com.accioma.telecosfacturamovil.adapter.InvoiceListAdapter;
 import com.accioma.telecosfacturamovil.R;
-import com.accioma.telecosfacturamovil.model.Consts;
 
 public class InvoiceListActivity extends AppCompatActivity {
 
