@@ -40,6 +40,9 @@ public class CustomerListAdapter  extends RecyclerView.Adapter<RecyclerView.View
         mCustomers = customers;
     }
 
+    public List<Customer> getCustomerList(){
+        return mCustomers;
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
@@ -75,6 +78,7 @@ public class CustomerListAdapter  extends RecyclerView.Adapter<RecyclerView.View
                         Intent intent1 = new Intent(CustomerListAdapter.this.mActivity,
                                 CustomerFormActivity.class);
                         Log.e(TAG, "Edit Customer");
+                        intent1.putExtra("CUSTOMER", mCustomers.get(position));
                         CustomerListAdapter.this.mActivity.startActivity(intent1);
                         break;
                 }

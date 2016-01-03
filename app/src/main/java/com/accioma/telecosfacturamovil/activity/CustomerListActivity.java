@@ -20,6 +20,7 @@ import com.accioma.telecosfacturamovil.Consts;
 import com.accioma.telecosfacturamovil.R;
 import com.accioma.telecosfacturamovil.adapter.CustomerListAdapter;
 import com.accioma.telecosfacturamovil.adapter.DrawerAdapter;
+import com.accioma.telecosfacturamovil.model.Customer;
 import com.accioma.telecosfacturamovil.model.CustomerDao;
 import com.accioma.telecosfacturamovil.model.DaoMaster;
 import com.accioma.telecosfacturamovil.model.DaoSession;
@@ -136,7 +137,7 @@ public class CustomerListActivity extends AppCompatActivity {
 
         QueryBuilder qbCustomer = customerDao.queryBuilder();
 
-        mCustomerListAdapter = new CustomerListAdapter(this, qbCustomer.list());
+        mCustomerListAdapter = new CustomerListAdapter(this, qbCustomer.limit(20).list());
         mCustomerList = (RecyclerView) findViewById(R.id.customer_list);
         mCustomerList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);

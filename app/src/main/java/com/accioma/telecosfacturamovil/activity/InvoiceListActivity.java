@@ -21,6 +21,7 @@ import com.accioma.telecosfacturamovil.adapter.CustomerListAdapter;
 import com.accioma.telecosfacturamovil.adapter.DrawerAdapter;
 import com.accioma.telecosfacturamovil.adapter.InvoiceListAdapter;
 import com.accioma.telecosfacturamovil.R;
+import com.accioma.telecosfacturamovil.model.Customer;
 
 public class InvoiceListActivity extends AppCompatActivity {
 

@@ -1,5 +1,6 @@
 package com.accioma.telecosfacturamovil.activity;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
@@ -54,7 +56,7 @@ public class CustomerFormActivity extends AppCompatActivity
     private TextView mTvFirstName;
     private TextView mTvLastName;
     private TextView mTvFin;
-    private TextView mTvEmail;
+    private EditText mTvEmail;
     private TextView mTvContact;
     private TextView mTvMobilePhone;
     private TextView mTvPhone;
@@ -62,6 +64,7 @@ public class CustomerFormActivity extends AppCompatActivity
     private TextView mTvAddressLine2;
     private TextView mTvAddressLine3;
 
+    private Long mCustomerId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +81,31 @@ public class CustomerFormActivity extends AppCompatActivity
         mTvFirstName = (TextView) findViewById(R.id.editTextFirstName);
         mTvLastName = (TextView) findViewById(R.id.editTextLastName);
         mTvFin = (TextView) findViewById(R.id.editTextFIN);
-        mTvEmail = (TextView) findViewById(R.id.editTextEmail);
+        mTvEmail = (EditText) findViewById(R.id.editTextEmail);
         mTvContact = (TextView) findViewById(R.id.editTextContactName);
         mTvMobilePhone = (TextView) findViewById(R.id.editTextMobile);
         mTvPhone = (TextView) findViewById(R.id.editTextLandline);
         mTvAddressLine1 = (TextView) findViewById(R.id.editTextAddress1);
         mTvAddressLine2 = (TextView) findViewById(R.id.editTextAddress2);
         mTvAddressLine3 = (TextView) findViewById(R.id.editTextAddress3);
+
+        Intent intent = getIntent();
+        if (intent.hasExtra("CUSTOMER")){
+            Customer customer = (Customer)intent.getSerializableExtra("CUSTOMER");
+            mCustomerId = customer.getId();
+            mTvFirstName.setText(customer.getFirstname());
+            mTvLastName.setText(customer.getLastname());
+            mTvFin.setText(customer.getFin());
+            mTvEmail.setText(customer.getEmail());
+            mTvContact.setText(customer.getContact_name());
+            mTvMobilePhone.setText(customer.getMobile_phone());
+            mTvPhone.setText(customer.getPhone());
+            mTvAddressLine1.setText(customer.getAddress1());
+            mTvAddressLine2.setText(customer.getAddress2());
+            mTvAddressLine3.setText(customer.getAddress3());
+        } else {
+            mCustomerId = null;
+        }
 
         mTvLocation = (TextView) findViewById(R.id.tvLocation);
         btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
@@ -212,6 +233,9 @@ public class CustomerFormActivity extends AppCompatActivity
     }
 
     private String validateFields() {
+        if (!Consts.isValid(mTvEmail, Consts.EMAIL_REGEX, "Email incorrecto", true)){
+            return "Email incorrecto";
+        }
         return "valid";
     }
 
@@ -230,7 +254,7 @@ public class CustomerFormActivity extends AppCompatActivity
         String addressLine3 = mTvAddressLine3.getText().toString();
         String location = mTvLocation.getText().toString();
 
-        Customer customer = new Customer(null,
+        Customer customer = new Customer(mCustomerId,
                 name, lastName, firstName, fin, email, contact, mobilePhone, phone,
                 addressLine1, addressLine2, addressLine3, location
                 );
@@ -241,7 +265,8 @@ public class CustomerFormActivity extends AppCompatActivity
         DaoSession daoSession = daoMaster.newSession();
 
         CustomerDao customerDao = daoSession.getCustomerDao();
-        customerDao.insert(customer);
+        customerDao.insertOrReplace(customer);
+
 
     }
 
