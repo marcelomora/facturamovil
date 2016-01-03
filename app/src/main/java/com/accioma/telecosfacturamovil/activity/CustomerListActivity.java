@@ -16,10 +16,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.accioma.telecosfacturamovil.Consts;
 import com.accioma.telecosfacturamovil.R;
 import com.accioma.telecosfacturamovil.adapter.CustomerListAdapter;
 import com.accioma.telecosfacturamovil.adapter.DrawerAdapter;
-import com.accioma.telecosfacturamovil.db.CustomerDAO;
 import com.accioma.telecosfacturamovil.model.CustomerDao;
 import com.accioma.telecosfacturamovil.model.DaoMaster;
 import com.accioma.telecosfacturamovil.model.DaoSession;
@@ -59,7 +59,7 @@ public class CustomerListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "tfm-db", null);
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Consts.DB_NAME, null);
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
         DaoSession daoSession = daoMaster.newSession();
@@ -144,6 +144,16 @@ public class CustomerListActivity extends AppCompatActivity {
         mCustomerList.setLayoutManager(llm);
         mCustomerList.setAdapter(mCustomerListAdapter);
         //mCustomerListAdapter = new CustomerListAdapter(getApplicationContext(), this);
+
+        mFab = (ImageButton) findViewById(R.id.add_customer_button);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( CustomerListActivity.this, CustomerFormActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
