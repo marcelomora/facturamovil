@@ -89,10 +89,6 @@ public class InvoiceListActivity extends AppCompatActivity {
                     if(intent != null){
                         startActivity(intent);
                     }
-
-
-                    Toast.makeText(InvoiceListActivity.this, "The Item clicked is: " +
-                    rv.getChildAdapterPosition(child), Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 return false;

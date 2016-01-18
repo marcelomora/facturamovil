@@ -1,5 +1,7 @@
 package com.accioma.telecosfacturamovil.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,7 +10,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,9 +29,11 @@ import com.accioma.telecosfacturamovil.model.CustomerDao;
 import com.accioma.telecosfacturamovil.model.DaoMaster;
 import com.accioma.telecosfacturamovil.model.DaoSession;
 
+import java.util.List;
+
 import de.greenrobot.dao.query.QueryBuilder;
 
-public class CustomerListActivity extends AppCompatActivity {
+public class CustomerListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
 
     private Toolbar toolbar;
@@ -57,13 +63,15 @@ public class CustomerListActivity extends AppCompatActivity {
 
     ImageButton mFab;
 
+    DaoSession daoSession;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Consts.DB_NAME, null);
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
-        DaoSession daoSession = daoMaster.newSession();
+        daoSession = daoMaster.newSession();
 
         CustomerDao customerDao = daoSession.getCustomerDao();
 
@@ -161,7 +169,17 @@ public class CustomerListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_customer_list, menu);
-        return true;
+        MenuItem searchItem = menu.findItem(R.id.action_customer_search);
+        SearchManager searchManager = (SearchManager) CustomerListActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = null;
+        if (searchItem != null){
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null){
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(CustomerListActivity.this.getComponentName()));
+        }
+        searchView.setOnQueryTextListener(this);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -177,5 +195,40 @@ public class CustomerListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Log.e("CustomerList TextSubmit", query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.e("CustomerList TextChange", newText);
+        QueryBuilder.LOG_SQL = true;
+        /*
+        final List<Customer> filteredCustomerList = qbCustomer.limit(20)
+                .whereOr(CustomerDao.Properties.Name.like(newText),
+                        CustomerDao.Properties.Fin.like(newText)).list();
+        */
+        final List<Customer> filteredCustomerList = filter(newText);
+        mCustomerListAdapter.animateTo(filteredCustomerList);
+        mRecyclerView.scrollToPosition(0);
+        return true;
+    }
+
+    private List<Customer> filter(String query){
+        daoSession.clear();
+        CustomerDao customerDao = daoSession.getCustomerDao();
+        QueryBuilder qb = customerDao.queryBuilder();
+        List<Customer> filteredCustomerList = qb.limit(20)
+                .whereOr(CustomerDao.Properties.Name.like("%" + query + "%"),
+                        CustomerDao.Properties.Fin.like("%" + query + "%")).list();
+        for (Customer c : filteredCustomerList){
+            Log.e("List", c.getName());
+        }
+        return filteredCustomerList;
+
     }
 }

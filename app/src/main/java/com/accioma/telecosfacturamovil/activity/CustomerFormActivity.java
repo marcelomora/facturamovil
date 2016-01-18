@@ -215,7 +215,8 @@ public class CustomerFormActivity extends AppCompatActivity
 
         switch(id) {
             case android.R.id.home:
-                onBackPressed();
+                //onBackPressed();
+                this.finish();
                 return true;
 
             case R.id.action_save_customer:

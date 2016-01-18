@@ -10,6 +10,7 @@
     <string name="closeDrawer">Close Drawer</string>
     <string name="title_activity_product_list">Productos</string>
     <string name="title_activity_customer_list">Clientes</string>
+    <string name="title_activity_customer_form">Cliente</string>
     <string name="title_activity_invoice_form">Factura</string>
     <string name="customer">Cliente</string>
     <string name="address">Dirección</string>
@@ -19,5 +20,6 @@
     <string name="vat">IVA</string>
     <string name="total">Total</string>
     <string name="show_location">Mostar ubicación</string>
+    <string name="search">Buscar</string>
 
 </resources>

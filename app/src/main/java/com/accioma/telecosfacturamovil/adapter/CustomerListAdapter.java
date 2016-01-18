@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.accioma.telecosfacturamovil.Consts;
 import com.accioma.telecosfacturamovil.R;
 import com.accioma.telecosfacturamovil.activity.CustomerFormActivity;
+import com.accioma.telecosfacturamovil.activity.CustomerListActivity;
 import com.accioma.telecosfacturamovil.activity.InvoiceFormActivity;
 import com.accioma.telecosfacturamovil.model.Customer;
 
@@ -77,9 +78,9 @@ public class CustomerListAdapter  extends RecyclerView.Adapter<RecyclerView.View
                     case EDIT_CUSTOMER:
                         Intent intent1 = new Intent(CustomerListAdapter.this.mActivity,
                                 CustomerFormActivity.class);
-                        Log.e(TAG, "Edit Customer");
                         intent1.putExtra("CUSTOMER", mCustomers.get(position));
-                        CustomerListAdapter.this.mActivity.startActivity(intent1);
+                        Log.e(TAG, mActivity.getClass().getName());
+                        view.getContext().startActivity(intent1);
                         break;
                 }
 
@@ -122,5 +123,56 @@ public class CustomerListAdapter  extends RecyclerView.Adapter<RecyclerView.View
             itemClickListener.onClick(view, getAdapterPosition(), true);
             return true;
         }
+    }
+
+    public void animateTo(List<Customer> models) {
+        applyAndAnimateRemovals(models);
+        applyAndAnimateAdditions(models);
+        applyAndAnimateMovedItems(models);
+    }
+
+    private void applyAndAnimateRemovals(List<Customer> newModels) {
+        for (int i = mCustomers.size() - 1; i >= 0; i--) {
+            final Customer model = mCustomers.get(i);
+            if (!newModels.contains(model)) {
+                removeItem(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAdditions(List<Customer> newModels) {
+        for (int i = 0, count = newModels.size(); i < count; i++) {
+            final Customer model = newModels.get(i);
+            if (!mCustomers.contains(model)) {
+                addItem(i, model);
+            }
+        }
+    }
+
+    private void applyAndAnimateMovedItems(List<Customer> newModels) {
+        for (int toPosition = newModels.size() - 1; toPosition >= 0; toPosition--) {
+            final Customer model = newModels.get(toPosition);
+            final int fromPosition = mCustomers.indexOf(model);
+            if (fromPosition >= 0 && fromPosition != toPosition) {
+                moveItem(fromPosition, toPosition);
+            }
+        }
+    }
+
+    public Customer removeItem(int position) {
+        final Customer customer = mCustomers.remove(position);
+        notifyItemRemoved(position);
+        return customer;
+    }
+
+    public void addItem(int position, Customer model) {
+        mCustomers.add(position, model);
+        notifyItemInserted(position);
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        final Customer model = mCustomers.remove(fromPosition);
+        mCustomers.add(toPosition, model);
+        notifyItemMoved(fromPosition, toPosition);
     }
 }

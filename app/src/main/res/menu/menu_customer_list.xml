@@ -2,13 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.accioma.telecosfacturamovil.activity.CustomerListActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
     <item
-        android:id="@+id/action_mail"
+        android:id="@+id/action_customer_search"
         android:orderInCategory="200"
-        android:title="Enviar"
+        android:title="@string/search"
         android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView"
         />
 </menu>
