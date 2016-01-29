@@ -35,7 +35,15 @@
             android:name=".activity.InvoiceFormActivity"
             android:label="@string/title_activity_invoice_form" >
         </activity>
-        <activity android:name=".activity.CustomerFormActivity" >
+        <activity android:name=".activity.CustomerFormActivity"
+           android:label="@string/title_activity_customer_form" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".activity.CustomerListActivity">
+            </meta-data>
+        </activity>
+        <activity android:name=".activity.SettingsFormActivity"
+            android:label="@string/action_settings" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".activity.CustomerListActivity">
+            </meta-data>
         </activity>
     </application>
 

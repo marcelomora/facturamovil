@@ -16,11 +16,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.accioma.telecosfacturamovil.Consts;
 import com.accioma.telecosfacturamovil.adapter.CustomerListAdapter;
 import com.accioma.telecosfacturamovil.adapter.DrawerAdapter;
 import com.accioma.telecosfacturamovil.adapter.InvoiceListAdapter;
 import com.accioma.telecosfacturamovil.R;
-import com.accioma.telecosfacturamovil.model.Consts;
+import com.accioma.telecosfacturamovil.model.Customer;
 
 public class InvoiceListActivity extends AppCompatActivity {
 
@@ -88,10 +89,6 @@ public class InvoiceListActivity extends AppCompatActivity {
                     if(intent != null){
                         startActivity(intent);
                     }
-
-
-                    Toast.makeText(InvoiceListActivity.this, "The Item clicked is: " +
-                    rv.getChildAdapterPosition(child), Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 return false;

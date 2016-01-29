@@ -1,13 +1,18 @@
 package com.accioma.telecosfacturamovil.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,20 +20,39 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.accioma.telecosfacturamovil.Consts;
 import com.accioma.telecosfacturamovil.R;
 import com.accioma.telecosfacturamovil.adapter.CustomerListAdapter;
 import com.accioma.telecosfacturamovil.adapter.DrawerAdapter;
 import com.accioma.telecosfacturamovil.model.Customer;
+import com.accioma.telecosfacturamovil.model.CustomerDao;
+import com.accioma.telecosfacturamovil.model.DaoMaster;
+import com.accioma.telecosfacturamovil.model.DaoSession;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.TextHttpResponseHandler;
 
-public class CustomerListActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
+import de.greenrobot.dao.query.QueryBuilder;
+
+public class CustomerListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
 
     private Toolbar toolbar;
     private RecyclerView mCustomerList;
     private CustomerListAdapter mCustomerListAdapter;
 
-    String TITLES[] = {"Facturas","Clientes"};
-    int ICONS[] = {R.drawable.ic_coin,R.drawable.ic_account};
+    String TITLES[] = {"Facturas","Clientes","Configuracion"};
+    int ICONS[] = {R.drawable.ic_coin,R.drawable.ic_account,R.drawable.ic_settings};
 
     //Similarly we Create a String Resource for the name and email in the header view
     //And we also create a int resource for profile picture in the header view
@@ -50,9 +74,18 @@ public class CustomerListActivity extends AppCompatActivity {
 
     ImageButton mFab;
 
+    DaoSession daoSession;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Consts.DB_NAME, null);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+
+        CustomerDao customerDao = daoSession.getCustomerDao();
+
         setContentView(R.layout.activity_customer_list);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -84,9 +117,16 @@ public class CustomerListActivity extends AppCompatActivity {
                         case 1:
                             intent = new Intent(CustomerListActivity.this, InvoiceListActivity.class );
                             break;
+                        case 3:
+                            intent = new Intent(CustomerListActivity.this, SettingsFormActivity.class );
+                            break;
                     }
                     if(intent != null){
-                        startActivity(intent);
+                        try{
+                            startActivity(intent);
+                        }catch (Exception ex){
+                            Log.d("Error Activity", ex.getMessage());
+                        }
                     }
 
 
@@ -121,7 +161,9 @@ public class CustomerListActivity extends AppCompatActivity {
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
-        mCustomerListAdapter = new CustomerListAdapter(this);
+        QueryBuilder qbCustomer = customerDao.queryBuilder();
+
+        mCustomerListAdapter = new CustomerListAdapter(this, qbCustomer.limit(20).list());
         mCustomerList = (RecyclerView) findViewById(R.id.customer_list);
         mCustomerList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -129,13 +171,33 @@ public class CustomerListActivity extends AppCompatActivity {
         mCustomerList.setLayoutManager(llm);
         mCustomerList.setAdapter(mCustomerListAdapter);
         //mCustomerListAdapter = new CustomerListAdapter(getApplicationContext(), this);
+
+        mFab = (ImageButton) findViewById(R.id.add_customer_button);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( CustomerListActivity.this, CustomerFormActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_customer_list, menu);
-        return true;
+        MenuItem searchItem = menu.findItem(R.id.action_customer_search);
+        SearchManager searchManager = (SearchManager) CustomerListActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = null;
+        if (searchItem != null){
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null){
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(CustomerListActivity.this.getComponentName()));
+        }
+        searchView.setOnQueryTextListener(this);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -151,5 +213,59 @@ public class CustomerListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Log.e("CustomerList TextSubmit", query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.e("CustomerList TextChange", newText);
+        QueryBuilder.LOG_SQL = true;
+        /*
+        final List<Customer> filteredCustomerList = qbCustomer.limit(20)
+                .whereOr(CustomerDao.Properties.Name.like(newText),
+                        CustomerDao.Properties.Fin.like(newText)).list();
+        */
+        final List<Customer> filteredCustomerList = filter(newText);
+        mCustomerListAdapter.animateTo(filteredCustomerList);
+        mRecyclerView.scrollToPosition(0);
+        return true;
+    }
+
+    private List<Customer> filter(String query){
+        daoSession.clear();
+        CustomerDao customerDao = daoSession.getCustomerDao();
+        QueryBuilder qb = customerDao.queryBuilder();
+        List<Customer> filteredCustomerList = qb.limit(20)
+                .whereOr(CustomerDao.Properties.Name.like("%" + query + "%"),
+                        CustomerDao.Properties.Fin.like("%" + query + "%")).list();
+        for (Customer c : filteredCustomerList){
+            Log.e("List", c.getName());
+        }
+        return filteredCustomerList;
+
+    }
+
+    private List<Customer> searchCustomerWS(String query){
+        AsyncHttpClient client = new AsyncHttpClient();
+        ArrayList<Customer> customers = new ArrayList<Customer>();
+        client.get("http://192.168.57.1:5000/2260004880001", new TextHttpResponseHandler(){
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Gson gson = new GsonBuilder().create();
+                //gson.fromJson(responseString, Response.class);
+            }
+        });
+        return customers;
     }
 }
