@@ -21,5 +21,10 @@
     <string name="total">Total</string>
     <string name="show_location">Mostar ubicación</string>
     <string name="search">Buscar</string>
+    <string name="server">Servidor</string>
+    <string name="password">Contraseña</string>
+    <string name="host">Host</string>
+    <string name="username">Usuario</string>
+    <string name="ok_save">Comprobar y guardar</string>
 
 </resources>

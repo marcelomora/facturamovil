@@ -28,9 +28,20 @@ import com.accioma.telecosfacturamovil.model.Customer;
 import com.accioma.telecosfacturamovil.model.CustomerDao;
 import com.accioma.telecosfacturamovil.model.DaoMaster;
 import com.accioma.telecosfacturamovil.model.DaoSession;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import de.greenrobot.dao.query.QueryBuilder;
 
 public class CustomerListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -40,8 +51,8 @@ public class CustomerListActivity extends AppCompatActivity implements SearchVie
     private RecyclerView mCustomerList;
     private CustomerListAdapter mCustomerListAdapter;
 
-    String TITLES[] = {"Facturas","Clientes"};
-    int ICONS[] = {R.drawable.ic_coin,R.drawable.ic_account};
+    String TITLES[] = {"Facturas","Clientes","Configuracion"};
+    int ICONS[] = {R.drawable.ic_coin,R.drawable.ic_account,R.drawable.ic_settings};
 
     //Similarly we Create a String Resource for the name and email in the header view
     //And we also create a int resource for profile picture in the header view
@@ -106,9 +117,16 @@ public class CustomerListActivity extends AppCompatActivity implements SearchVie
                         case 1:
                             intent = new Intent(CustomerListActivity.this, InvoiceListActivity.class );
                             break;
+                        case 3:
+                            intent = new Intent(CustomerListActivity.this, SettingsFormActivity.class );
+                            break;
                     }
                     if(intent != null){
-                        startActivity(intent);
+                        try{
+                            startActivity(intent);
+                        }catch (Exception ex){
+                            Log.d("Error Activity", ex.getMessage());
+                        }
                     }
 
 
@@ -230,5 +248,24 @@ public class CustomerListActivity extends AppCompatActivity implements SearchVie
         }
         return filteredCustomerList;
 
+    }
+
+    private List<Customer> searchCustomerWS(String query){
+        AsyncHttpClient client = new AsyncHttpClient();
+        ArrayList<Customer> customers = new ArrayList<Customer>();
+        client.get("http://192.168.57.1:5000/2260004880001", new TextHttpResponseHandler(){
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Gson gson = new GsonBuilder().create();
+                //gson.fromJson(responseString, Response.class);
+            }
+        });
+        return customers;
     }
 }
